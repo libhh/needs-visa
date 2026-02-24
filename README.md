@@ -174,6 +174,6 @@ especially if you want to update or correct visa data.
 
 ## License
 
-MIT © Your Name
+MIT © Ali Behbudov
 
 Data from [passport-index-dataset](https://github.com/ilyankou/passport-index-dataset) — also MIT.
