@@ -57,15 +57,6 @@ function normalizeRequirement(raw) {
   return REQUIREMENT_MAP[trimmed] ?? "unknown";
 }
 
-/**
- * Returns true if the requirement means a visa is NOT needed
- * (i.e. traveller can enter freely or with an eTA/VOA which
- * does not require prior embassy approval).
- */
-function requiresVisa(requirement) {
-  return requirement === "visa_required" || requirement === "e_visa";
-}
-
 async function fetchCSV(url) {
   const res = await fetch(url);
 
