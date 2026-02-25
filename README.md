@@ -10,7 +10,7 @@ A lightweight, zero-dependency JavaScript package that tells you whether citizen
 of one country need a visa to visit another. Covers **199 countries**, works offline,
 and includes no API keys or network calls at runtime.
 
-Data is sourced from the [Passport Index dataset](https://github.com/ilyankou/passport-index-dataset) (MIT).
+Data is sourced from the [Passport Index data](https://github.com/imorte/passport-index-data) (MIT).
 
 ---
 
@@ -120,7 +120,7 @@ getVisaRequiredDestinations('IN')
 
 ### `getSupportedPassports()`
 
-Returns a sorted array of all passport country codes in the dataset.
+Returns a sorted array of all passport country codes in the data.
 
 ```js
 import { getSupportedPassports } from 'needs-visa';
@@ -135,7 +135,7 @@ getSupportedPassports()
 
 Visa requirements are bundled as a static JSON file — no network calls are made
 at runtime. The data is sourced from the
-[passport-index-dataset](https://github.com/ilyankou/passport-index-dataset) project (MIT license).
+[passport-index-data](https://github.com/imorte/passport-index-data) project (MIT license).
 
 To refresh the data to the latest version:
 
@@ -143,7 +143,7 @@ To refresh the data to the latest version:
 npm run build:data
 ```
 
-The dataset is also automatically refreshed monthly via a GitHub Actions workflow
+The data is also automatically refreshed monthly via a GitHub Actions workflow
 that opens a pull request when upstream data changes.
 
 > **Note:** Visa requirements change frequently. Always verify with official
@@ -176,4 +176,4 @@ especially if you want to update or correct visa data.
 
 MIT © Ali Behbudov
 
-Data from [passport-index-dataset](https://github.com/ilyankou/passport-index-dataset) — also MIT.
+Data from [passport-index-data](https://github.com/imorte/passport-index-data) — also MIT.

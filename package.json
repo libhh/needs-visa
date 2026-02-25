@@ -1,0 +1,55 @@
+{
+  "name": "needs-visa",
+  "version": "1.0.0",
+  "description": "Check whether a passport holder needs a visa to travel between two countries. Based on the Passport Index data (199 countries).",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "build:data": "node scripts/build-data.js",
+    "test": "node --test test/**/*.test.js",
+    "test:watch": "node --test --watch test/**/*.test.js",
+    "lint": "eslint src/ test/ scripts/",
+    "lint:fix": "eslint src/ test/ scripts/ --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "npm run lint && npm run format:check && npm test",
+    "prepublishOnly": "npm run validate"
+  },
+  "keywords": [
+    "visa",
+    "travel",
+    "passport",
+    "countries",
+    "needs-visa",
+    "visa-check",
+    "visa-requirements",
+    "passport-index"
+  ],
+  "author": "Ali Behbudov <email@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/libhh/needs-visa.git"
+  },
+  "bugs": {
+    "url": "https://github.com/libhh/needs-visa/issues"
+  },
+  "homepage": "https://github.com/libhh/needs-visa#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "src/",
+    "data/",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0"
+  }
+}
