@@ -14,16 +14,16 @@
  * License: MIT
  */
 
-import { writeFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { writeFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const CSV_URL =
-  'https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index-tidy-iso2.csv';
+  "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index-tidy-iso2.csv";
 
-const OUTPUT_PATH = resolve(__dirname, '../data/visa-requirements.json');
+const OUTPUT_PATH = resolve(__dirname, "../data/visa-requirements.json");
 
 /**
  * Requirement values from the dataset and what they map to.
@@ -38,14 +38,14 @@ const OUTPUT_PATH = resolve(__dirname, '../data/visa-requirements.json');
  *   "visa required"   = visa required
  */
 const REQUIREMENT_MAP = {
-  '-1': 'no_admission',
-  'no admission': 'no_admission',
-  'not admitted': 'no_admission',
-  'visa free': 'visa_free',
-  'visa on arrival': 'visa_on_arrival',
-  'e-visa': 'e_visa',
-  'eta': 'eta',
-  'visa required': 'visa_required',
+  "-1": "no_admission",
+  "no admission": "no_admission",
+  "not admitted": "no_admission",
+  "visa free": "visa_free",
+  "visa on arrival": "visa_on_arrival",
+  "e-visa": "e_visa",
+  eta: "eta",
+  "visa required": "visa_required",
 };
 
 function normalizeRequirement(raw) {
@@ -53,15 +53,15 @@ function normalizeRequirement(raw) {
 
   // Positive numeric string = visa free for N days
   if (/^\d+$/.test(trimmed)) {
-    return 'visa_free';
+    return "visa_free";
   }
 
   // Negative number = no admission (-1 is the standard, but defensively catch any negative)
   if (/^-\d+$/.test(trimmed)) {
-    return 'no_admission';
+    return "no_admission";
   }
 
-  return REQUIREMENT_MAP[trimmed] ?? 'unknown';
+  return REQUIREMENT_MAP[trimmed] ?? "unknown";
 }
 
 async function fetchCSV(url) {
@@ -76,7 +76,7 @@ async function fetchCSV(url) {
 }
 
 function parseCSV(csv) {
-  const lines = csv.trim().split('\n');
+  const lines = csv.trim().split("\n");
 
   // Skip header row
   const rows = lines.slice(1);
@@ -86,23 +86,27 @@ function parseCSV(csv) {
 
   for (const line of rows) {
     // CSV columns: Passport,Destination,Requirement
-    const commaIndex = line.indexOf(',');
-    const secondCommaIndex = line.indexOf(',', commaIndex + 1);
+    const commaIndex = line.indexOf(",");
+    const secondCommaIndex = line.indexOf(",", commaIndex + 1);
 
     const from = line.slice(0, commaIndex).trim().toUpperCase();
-    const to = line.slice(commaIndex + 1, secondCommaIndex).trim().toUpperCase();
+    const to = line
+      .slice(commaIndex + 1, secondCommaIndex)
+      .trim()
+      .toUpperCase();
     const rawRequirement = line
       .slice(secondCommaIndex + 1)
-      .trim()                 // strip leading/trailing whitespace including \r from Windows line endings
-      .replace(/^"|"$/g, '')  // strip surrounding quotes if present
-      .trim();                // trim again in case there was whitespace inside quotes
+      .trim() // strip leading/trailing whitespace including \r from Windows line endings
+      .replace(/^"|"$/g, "") // strip surrounding quotes if present
+      .trim(); // trim again in case there was whitespace inside quotes
 
     // Same-country pairs are always visa_free regardless of what the dataset says.
     // The upstream dataset marks these as -1 (no_admission) which is incorrect
     // — you are always free to be in your own country.
-    const requirement = from === to ? 'visa_free' : normalizeRequirement(rawRequirement);
+    const requirement =
+      from === to ? "visa_free" : normalizeRequirement(rawRequirement);
 
-    if (requirement === 'unknown') {
+    if (requirement === "unknown") {
       unknownValues.add(rawRequirement);
     }
 
@@ -147,28 +151,31 @@ async function main() {
 
     const output = {
       _meta: {
-        source: 'https://github.com/imorte/passport-index-data',
-        license: 'MIT',
+        source: "https://github.com/imorte/passport-index-data",
+        license: "MIT",
         generatedAt: new Date().toISOString(),
         passportCount: stats.passports,
         totalPairs: stats.totalPairs,
         requirementCounts: stats.counts,
         requirements: {
-          visa_free: 'No visa needed. Entry is permitted freely.',
-          visa_on_arrival: 'Visa can be obtained upon arrival. No prior embassy visit needed.',
-          eta: 'Electronic Travel Authorisation required. Applied online before travel.',
-          e_visa: 'Electronic visa required. Must be obtained online before travel.',
-          visa_required: 'A visa must be obtained from an embassy/consulate before travel.',
-          no_admission: 'Entry not permitted or passport not recognized.',
-          unknown: 'Requirement unknown. Check official government sources.',
+          visa_free: "No visa needed. Entry is permitted freely.",
+          visa_on_arrival:
+            "Visa can be obtained upon arrival. No prior embassy visit needed.",
+          eta: "Electronic Travel Authorisation required. Applied online before travel.",
+          e_visa:
+            "Electronic visa required. Must be obtained online before travel.",
+          visa_required:
+            "A visa must be obtained from an embassy/consulate before travel.",
+          no_admission: "Entry not permitted or passport not recognized.",
+          unknown: "Requirement unknown. Check official government sources.",
         },
       },
       data,
     };
 
-    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), 'utf-8');
+    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), "utf-8");
 
-    console.log('✅  Data built successfully!');
+    console.log("✅  Data built successfully!");
     console.log(`📄  Output: ${OUTPUT_PATH}`);
     console.log(`\n📊  Stats:`);
     console.log(`    Passports:   ${stats.passports}`);
@@ -178,7 +185,7 @@ async function main() {
       console.log(`      ${key.padEnd(20)} ${count}`);
     }
   } catch (err) {
-    console.error('❌  Build failed:', err.message);
+    console.error("❌  Build failed:", err.message);
     process.exit(1);
   }
 }
