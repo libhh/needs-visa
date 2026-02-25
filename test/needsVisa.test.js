@@ -375,6 +375,12 @@ describe("getVisaRequiredDestinations()", () => {
     assert.ok(!destinations.includes("BN"));
   });
 
+  test("returns sorted array", () => {
+    const destinations = getVisaRequiredDestinations("IN");
+    const sorted = [...destinations].sort();
+    assert.deepEqual(destinations, sorted);
+  });
+
   test("returns empty array for unknown passport", () => {
     const destinations = getVisaRequiredDestinations("ZZ");
     assert.deepEqual(destinations, []);

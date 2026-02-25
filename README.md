@@ -32,7 +32,6 @@ Data is sourced from the [Passport Index data](https://github.com/imorte/passpor
 - 🔌 **Offline-first** — All data bundled, works completely offline
 - ⚡ **Sub-millisecond lookups** — Synchronous, pre-bundled visa data
 - 🌍 **199 countries** — Comprehensive coverage of visa requirements
-- 📦 **Lightweight** — Minimal package size with gzipped distribution
 - 🤝 **TypeScript compatible** — Works seamlessly with TypeScript projects
 
 ---
