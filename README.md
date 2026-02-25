@@ -118,19 +118,6 @@ getVisaRequiredDestinations("IN");
 
 ---
 
-### `getSupportedPassports()`
-
-Returns a sorted array of all passport country codes in the data.
-
-```js
-import { getSupportedPassports } from "needs-visa";
-
-getSupportedPassports();
-// ['AD', 'AE', 'AF', 'AG', ..., 'ZW'] — 199 countries
-```
-
----
-
 ## Data
 
 Visa requirements are bundled as a static JSON file — no network calls are made
@@ -165,15 +152,8 @@ needsVisa({ to: "FR" });
 
 ---
 
-## Contributing
-
-Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for details,
-especially if you want to update or correct visa data.
-
----
-
 ## License
 
-MIT © Ali Behbudov
+Licensed under [MIT](/LICENSE)
 
 Data from [passport-index-data](https://github.com/imorte/passport-index-data) — also MIT.

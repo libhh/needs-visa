@@ -18,6 +18,5 @@ export {
   needsVisa,
   getVisaRequirement,
   getVisaFreeDestinations,
-  getVisaRequiredDestinations,
-  getSupportedPassports,
+  getVisaRequiredDestinations
 } from "./core.js";

@@ -164,12 +164,3 @@ export function getVisaRequiredDestinations(passportCountry) {
     .map(([code]) => code)
     .sort();
 }
-
-/**
- * Returns all passport countries available in the data.
- *
- * @returns {string[]} Sorted array of ISO 3166-1 alpha-2 country codes.
- */
-export function getSupportedPassports() {
-  return Object.keys(visaData).sort();
-}
