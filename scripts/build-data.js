@@ -14,16 +14,16 @@
  * License: MIT
  */
 
-import { writeFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { writeFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const CSV_URL =
-  'https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index-tidy-iso2.csv';
+  "https://raw.githubusercontent.com/imorte/passport-index-data/refs/heads/main/passport-index-tidy-iso2.csv";
 
-const OUTPUT_PATH = resolve(__dirname, '../data/visa-requirements.json');
+const OUTPUT_PATH = resolve(__dirname, "../data/visa-requirements.json");
 
 /**
  * Requirement values from the data and what they map to.
@@ -38,12 +38,12 @@ const OUTPUT_PATH = resolve(__dirname, '../data/visa-requirements.json');
  *   "visa required" = visa required
  */
 const REQUIREMENT_MAP = {
-  '-1': 'no_admission',
-  'visa free': 'visa_free',
-  'visa on arrival': 'visa_on_arrival',
-  'e-visa': 'e_visa',
-  'eta': 'eta',
-  'visa required': 'visa_required',
+  "-1": "no_admission",
+  "visa free": "visa_free",
+  "visa on arrival": "visa_on_arrival",
+  "e-visa": "e_visa",
+  eta: "eta",
+  "visa required": "visa_required",
 };
 
 function normalizeRequirement(raw) {
@@ -51,10 +51,10 @@ function normalizeRequirement(raw) {
 
   // Numeric string = visa free for N days (also maps to visa_free)
   if (/^\d+$/.test(trimmed)) {
-    return 'visa_free';
+    return "visa_free";
   }
 
-  return REQUIREMENT_MAP[trimmed] ?? 'unknown';
+  return REQUIREMENT_MAP[trimmed] ?? "unknown";
 }
 
 /**
@@ -63,21 +63,23 @@ function normalizeRequirement(raw) {
  * does not require prior embassy approval).
  */
 function requiresVisa(requirement) {
-  return requirement === 'visa_required' || requirement === 'e_visa';
+  return requirement === "visa_required" || requirement === "e_visa";
 }
 
 async function fetchCSV(url) {
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch CSV file: ${res.status} ${res.statusText}`);
+    throw new Error(
+      `Failed to fetch CSV file: ${res.status} ${res.statusText}`,
+    );
   }
 
   return res.text();
 }
 
 function parseCSV(csv) {
-  const lines = csv.trim().split('\n');
+  const lines = csv.trim().split("\n");
 
   // Skip header row
   const rows = lines.slice(1);
@@ -87,16 +89,22 @@ function parseCSV(csv) {
 
   for (const line of rows) {
     // CSV columns: Passport,Destination,Requirement
-    const commaIndex = line.indexOf(',');
-    const secondCommaIndex = line.indexOf(',', commaIndex + 1);
+    const commaIndex = line.indexOf(",");
+    const secondCommaIndex = line.indexOf(",", commaIndex + 1);
 
     const from = line.slice(0, commaIndex).trim().toUpperCase();
-    const to = line.slice(commaIndex + 1, secondCommaIndex).trim().toUpperCase();
-    const rawRequirement = line.slice(secondCommaIndex + 1).trim().replace(/^"|"$/g, '');
+    const to = line
+      .slice(commaIndex + 1, secondCommaIndex)
+      .trim()
+      .toUpperCase();
+    const rawRequirement = line
+      .slice(secondCommaIndex + 1)
+      .trim()
+      .replace(/^"|"$/g, "");
 
     const requirement = normalizeRequirement(rawRequirement);
 
-    if (requirement === 'unknown') {
+    if (requirement === "unknown") {
       unknownValues.add(rawRequirement);
     }
 
@@ -141,28 +149,32 @@ async function main() {
 
     const output = {
       _meta: {
-        source: 'https://github.com/imorte/passport-index-data',
-        license: 'MIT',
+        source: "https://github.com/imorte/passport-index-data",
+        license: "MIT",
         generatedAt: new Date().toISOString(),
         passportCount: stats.passports,
         totalPairs: stats.totalPairs,
         requirementCounts: stats.counts,
         requirements: {
-          visa_free: 'No visa needed. Entry is free (includes visa-free + limited stays).',
-          visa_on_arrival: 'Visa can be obtained upon arrival. No prior embassy visit needed.',
-          eta: 'Electronic Travel Authorisation required. Applied online before travel.',
-          e_visa: 'Electronic visa required. Must be obtained online before travel.',
-          visa_required: 'A visa must be obtained from an embassy/consulate before travel.',
-          no_admission: 'Entry not permitted or passport not recognized.',
-          unknown: 'Requirement unknown. Check official government sources.',
+          visa_free:
+            "No visa needed. Entry is free (includes visa-free + limited stays).",
+          visa_on_arrival:
+            "Visa can be obtained upon arrival. No prior embassy visit needed.",
+          eta: "Electronic Travel Authorisation required. Applied online before travel.",
+          e_visa:
+            "Electronic visa required. Must be obtained online before travel.",
+          visa_required:
+            "A visa must be obtained from an embassy/consulate before travel.",
+          no_admission: "Entry not permitted or passport not recognized.",
+          unknown: "Requirement unknown. Check official government sources.",
         },
       },
       data,
     };
 
-    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), 'utf-8');
+    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), "utf-8");
 
-    console.log('✅  Data built successfully!');
+    console.log("✅  Data built successfully!");
     console.log(`📄  Output: ${OUTPUT_PATH}`);
     console.log(`\n📊  Stats:`);
     console.log(`    Passports : ${stats.passports}`);
@@ -172,7 +184,7 @@ async function main() {
       console.log(`      ${key.padEnd(20)} ${count}`);
     }
   } catch (err) {
-    console.error('❌  Build failed:', err.message);
+    console.error("❌  Build failed:", err.message);
     process.exit(1);
   }
 }

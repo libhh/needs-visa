@@ -20,4 +20,4 @@ export {
   getVisaFreeDestinations,
   getVisaRequiredDestinations,
   getSupportedPassports,
-} from './core.js';
+} from "./core.js";

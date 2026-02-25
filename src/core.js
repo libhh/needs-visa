@@ -1,8 +1,12 @@
-import { createRequire } from 'module';
-import { normalizeCountryCode, VISA_FREE_REQUIREMENTS, VISA_REQUIRED_REQUIREMENTS } from './utils.js';
+import { createRequire } from "module";
+import {
+  normalizeCountryCode,
+  VISA_FREE_REQUIREMENTS,
+  VISA_REQUIRED_REQUIREMENTS,
+} from "./utils.js";
 
 const require = createRequire(import.meta.url);
-const { data: visaData, _meta } = require('../data/visa-requirements.json');
+const { data: visaData, _meta } = require("../data/visa-requirements.json");
 
 /**
  * @typedef {'visa_free'|'visa_on_arrival'|'eta'|'e_visa'|'visa_required'|'no_admission'|'unknown'} Requirement
@@ -41,8 +45,8 @@ const { data: visaData, _meta } = require('../data/visa-requirements.json');
  * needsVisa({ from: 'in', to: 'fr' }) // true — case-insensitive
  */
 export function needsVisa({ from, to } = {}) {
-  const fromCode = normalizeCountryCode(from, 'from');
-  const toCode = normalizeCountryCode(to, 'to');
+  const fromCode = normalizeCountryCode(from, "from");
+  const toCode = normalizeCountryCode(to, "to");
 
   // same-country: no visa required
   if (fromCode === toCode) return false;
@@ -84,8 +88,8 @@ export function needsVisa({ from, to } = {}) {
  * // }
  */
 export function getVisaRequirement({ from, to } = {}) {
-  const fromCode = normalizeCountryCode(from, 'from');
-  const toCode = normalizeCountryCode(to, 'to');
+  const fromCode = normalizeCountryCode(from, "from");
+  const toCode = normalizeCountryCode(to, "to");
 
   const requirement = visaData[fromCode]?.[toCode];
 
@@ -93,10 +97,13 @@ export function getVisaRequirement({ from, to } = {}) {
     return null;
   }
 
-  const description = _meta.requirements[requirement] ?? 'No description available.';
-  const required = VISA_REQUIRED_REQUIREMENTS.has(requirement) ? true
-    : VISA_FREE_REQUIREMENTS.has(requirement) ? false
-    : null;
+  const description =
+    _meta.requirements[requirement] ?? "No description available.";
+  const required = VISA_REQUIRED_REQUIREMENTS.has(requirement)
+    ? true
+    : VISA_FREE_REQUIREMENTS.has(requirement)
+      ? false
+      : null;
 
   return {
     from: fromCode,
@@ -120,7 +127,7 @@ export function getVisaRequirement({ from, to } = {}) {
  * getVisaFreeDestinations('US') // ['FR', 'DE', 'GB', ...]
  */
 export function getVisaFreeDestinations(passportCountry) {
-  const fromCode = normalizeCountryCode(passportCountry, 'passportCountry');
+  const fromCode = normalizeCountryCode(passportCountry, "passportCountry");
   const destinations = visaData[fromCode];
 
   if (!destinations) {
@@ -145,7 +152,7 @@ export function getVisaFreeDestinations(passportCountry) {
  * getVisaRequiredDestinations('IN') // ['FR', 'DE', 'US', ...]
  */
 export function getVisaRequiredDestinations(passportCountry) {
-  const fromCode = normalizeCountryCode(passportCountry, 'passportCountry');
+  const fromCode = normalizeCountryCode(passportCountry, "passportCountry");
   const destinations = visaData[fromCode];
 
   if (!destinations) {

@@ -25,25 +25,25 @@ npm install needs-visa
 ## Usage
 
 ```js
-import { needsVisa } from 'needs-visa';
+import { needsVisa } from "needs-visa";
 
-needsVisa({ from: 'IN', to: 'FR' }) // true  — Indian passport needs a visa for France
-needsVisa({ from: 'US', to: 'FR' }) // false — US passport is visa-free for France
-needsVisa({ from: 'IN', to: 'TH' }) // false — visa on arrival counts as no visa needed
-needsVisa({ from: 'US', to: 'AU' }) // false — eTA only, no visa needed
-needsVisa({ from: 'IN', to: 'AU' }) // true  — e-visa required
-needsVisa({ from: 'in', to: 'fr' }) // true  — codes are case-insensitive
+needsVisa({ from: "IN", to: "FR" }); // true  — Indian passport needs a visa for France
+needsVisa({ from: "US", to: "FR" }); // false — US passport is visa-free for France
+needsVisa({ from: "IN", to: "TH" }); // false — visa on arrival counts as no visa needed
+needsVisa({ from: "US", to: "AU" }); // false — eTA only, no visa needed
+needsVisa({ from: "IN", to: "AU" }); // true  — e-visa required
+needsVisa({ from: "in", to: "fr" }); // true  — codes are case-insensitive
 ```
 
 Country codes must be **ISO 3166-1 alpha-2** (two-letter codes like `US`, `FR`, `IN`).
 
 ### Return values
 
-| Result  | Meaning                                                   |
-|---------|-----------------------------------------------------------|
-| `true`  | A visa is required (including e-visa)                     |
-| `false` | No visa needed (visa-free, visa on arrival, or eTA)       |
-| `null`  | No data available for this country pair                   |
+| Result  | Meaning                                             |
+| ------- | --------------------------------------------------- |
+| `true`  | A visa is required (including e-visa)               |
+| `false` | No visa needed (visa-free, visa on arrival, or eTA) |
+| `null`  | No data available for this country pair             |
 
 ---
 
@@ -54,9 +54,9 @@ Country codes must be **ISO 3166-1 alpha-2** (two-letter codes like `US`, `FR`, 
 Returns `true`, `false`, or `null`.
 
 ```js
-needsVisa({ from: 'IN', to: 'FR' }) // true
-needsVisa({ from: 'US', to: 'FR' }) // false
-needsVisa({ from: 'ZZ', to: 'FR' }) // null — unknown country
+needsVisa({ from: "IN", to: "FR" }); // true
+needsVisa({ from: "US", to: "FR" }); // false
+needsVisa({ from: "ZZ", to: "FR" }); // null — unknown country
 ```
 
 ---
@@ -66,9 +66,9 @@ needsVisa({ from: 'ZZ', to: 'FR' }) // null — unknown country
 Returns a detailed result object, or `null` if no data is available.
 
 ```js
-import { getVisaRequirement } from 'needs-visa';
+import { getVisaRequirement } from "needs-visa";
 
-getVisaRequirement({ from: 'IN', to: 'TH' })
+getVisaRequirement({ from: "IN", to: "TH" });
 // {
 //   from: 'IN',
 //   to: 'TH',
@@ -80,14 +80,14 @@ getVisaRequirement({ from: 'IN', to: 'TH' })
 
 #### Requirement types
 
-| Value             | Meaning                                                   |
-|-------------------|-----------------------------------------------------------|
-| `visa_free`       | No visa needed                                            |
-| `visa_on_arrival` | Visa obtainable on arrival, no embassy visit needed       |
+| Value             | Meaning                                                      |
+| ----------------- | ------------------------------------------------------------ |
+| `visa_free`       | No visa needed                                               |
+| `visa_on_arrival` | Visa obtainable on arrival, no embassy visit needed          |
 | `eta`             | Electronic Travel Authorisation (apply online before travel) |
-| `e_visa`          | Electronic visa required (apply online before travel)     |
-| `visa_required`   | Visa required from embassy/consulate                      |
-| `no_admission`    | Entry not permitted or passport not recognized            |
+| `e_visa`          | Electronic visa required (apply online before travel)        |
+| `visa_required`   | Visa required from embassy/consulate                         |
+| `no_admission`    | Entry not permitted or passport not recognized               |
 
 ---
 
@@ -97,9 +97,9 @@ Returns a sorted array of destination country codes that require no visa.
 Includes visa-free, visa-on-arrival, and eTA destinations.
 
 ```js
-import { getVisaFreeDestinations } from 'needs-visa';
+import { getVisaFreeDestinations } from "needs-visa";
 
-getVisaFreeDestinations('US')
+getVisaFreeDestinations("US");
 // ['AU', 'BR', 'CA', 'FR', 'DE', 'GB', 'JP', ...]
 ```
 
@@ -110,9 +110,9 @@ getVisaFreeDestinations('US')
 Returns a sorted array of destinations where a visa is required (including e-visa).
 
 ```js
-import { getVisaRequiredDestinations } from 'needs-visa';
+import { getVisaRequiredDestinations } from "needs-visa";
 
-getVisaRequiredDestinations('IN')
+getVisaRequiredDestinations("IN");
 // ['AU', 'CN', 'DE', 'FR', 'GB', 'NZ', 'SG', 'US', ...]
 ```
 
@@ -123,9 +123,9 @@ getVisaRequiredDestinations('IN')
 Returns a sorted array of all passport country codes in the data.
 
 ```js
-import { getSupportedPassports } from 'needs-visa';
+import { getSupportedPassports } from "needs-visa";
 
-getSupportedPassports()
+getSupportedPassports();
 // ['AD', 'AE', 'AF', 'AG', ..., 'ZW'] — 199 countries
 ```
 
@@ -156,10 +156,10 @@ that opens a pull request when upstream data changes.
 Invalid country codes throw a `TypeError` with a descriptive message:
 
 ```js
-needsVisa({ from: 'INVALID', to: 'FR' })
+needsVisa({ from: "INVALID", to: "FR" });
 // TypeError: "from" must be a valid ISO 3166-1 alpha-2 country code (e.g. "US", "FR", "IN"). Received: "INVALID"
 
-needsVisa({ to: 'FR' })
+needsVisa({ to: "FR" });
 // TypeError: "from" must be a non-empty string.
 ```
 
