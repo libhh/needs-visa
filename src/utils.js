@@ -32,9 +32,11 @@ export const VISA_REQUIRED_REQUIREMENTS = new Set(["visa_required", "e_visa"]);
  * @throws {TypeError} If the code is not a valid ISO 3166-1 alpha-2 code
  */
 export function normalizeCountryCode(code, fieldName) {
+  const received = JSON.stringify(code);
+
   if (typeof code !== "string" || !code.trim()) {
     throw new TypeError(
-      `"${fieldName}" must be a non-empty string. Received: ${JSON.stringify(code)}`,
+      `"${fieldName}" must be a non-empty string. Received: ${received}`,
     );
   }
 
@@ -42,7 +44,7 @@ export function normalizeCountryCode(code, fieldName) {
 
   if (!ISO2_PATTERN.test(normalized)) {
     throw new TypeError(
-      `"${fieldName}" must be a valid ISO 3166-1 alpha-2 country code (e.g. "US", "FR", "IN"). Received: "${code}"`,
+      `"${fieldName}" must be a valid ISO 3166-1 alpha-2 country code (e.g. "US", "FR", "IN"). Received: ${received}`,
     );
   }
 

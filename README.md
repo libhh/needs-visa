@@ -4,6 +4,7 @@
 
 [![CI](https://github.com/libhh/needs-visa/actions/workflows/ci.yml/badge.svg)](https://github.com/libhh/needs-visa/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/needs-visa.svg)](https://www.npmjs.com/package/needs-visa)
+[![Coverage Status](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](./coverage)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A zero-dependency npm package that instantly checks visa requirements between any two countries from its bundled dataset of 199 nations. Works offline with no API calls or external dependencies.

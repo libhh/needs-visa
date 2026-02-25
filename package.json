@@ -11,11 +11,12 @@
     "build:data": "node scripts/build-data.js",
     "test": "node --test test/*.test.js",
     "test:watch": "node --test --watch test/*.test.js",
+    "test:coverage": "c8 node --test test/*.test.js",
     "lint": "eslint src/ test/ scripts/",
     "lint:fix": "eslint src/ test/ scripts/ --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate": "npm run lint && npm run format:check && npm test",
+    "validate": "npm run lint && npm run format:check && npm run test:coverage",
     "prepublishOnly": "npm run validate"
   },
   "keywords": [
@@ -47,9 +48,12 @@
     "README.md",
     "LICENSE"
   ],
+  "types": "src/index.d.ts",
   "devDependencies": {
-    "@eslint/js": "^9.0.0",
-    "eslint": "^9.0.0",
-    "prettier": "^3.0.0"
+    "@eslint/js": "^10.0.1",
+    "c8": "^11.0.0",
+    "eslint": "^10.0.1",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1"
   }
 }

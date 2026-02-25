@@ -1,3 +1,12 @@
+/**
+ * needs-visa core module
+ *
+ * Provides the main API for checking visa requirements between countries
+ * and retrieving visa-free/required destinations.
+ *
+ * @module core
+ */
+
 import { createRequire } from "module";
 import {
   normalizeCountryCode,
@@ -65,7 +74,6 @@ export function needsVisa({ from, to } = {}) {
     return true;
   }
 
-  // no_admission and unknown
   return null;
 }
 
