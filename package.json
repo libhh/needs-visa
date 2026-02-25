@@ -9,8 +9,8 @@
   },
   "scripts": {
     "build:data": "node scripts/build-data.js",
-    "test": "node --test test/**/*.test.js",
-    "test:watch": "node --test --watch test/**/*.test.js",
+    "test": "node --test test/*.test.js",
+    "test:watch": "node --test --watch test/*.test.js",
     "lint": "eslint src/ test/ scripts/",
     "lint:fix": "eslint src/ test/ scripts/ --fix",
     "format": "prettier --write .",
