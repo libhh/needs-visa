@@ -31,6 +31,9 @@ jobs:
       - name: Fetch latest data
         run: node scripts/build-data.js
 
+      - name: Format generated data file
+        run: npx prettier --write data/visa-requirements.json
+
       - name: Check for changes
         id: changes
         run: |
@@ -55,4 +58,5 @@ jobs:
 
             Please review the changes before merging.
           branch: chore/update-visa-data
+          add-paths: data/visa-requirements.json
           labels: automated, data-update
